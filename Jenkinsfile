@@ -1,9 +1,19 @@
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent { docker { image 'node:20.17.0-alpine3.20' } }
+
+    environment {
+        DISABLE_AUTH = 'true'
+        DB_ENGINE    = 'sqlite'
+    }
+
     stages {
         stage('build') {
             steps {
+                
+                echo "Database engine is ${DB_ENGINE}"
+                echo "DISABLE_AUTH is ${DISABLE_AUTH}"
+                
                 // sh 'docker -v'
                 sh 'node -v'
                 sh 'npm -v'
