@@ -3,7 +3,14 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'node --version'
+                sh 'docker -v'
+                sh 'node -v'
+                sh 'npm -v'
+                sh 'echo "Hello World"'
+                sh '''
+                    echo "Multiline shell steps works too"
+                    ls -lah
+                '''
             }
         }
     }
