@@ -1,52 +1,28 @@
-/* groovylint-disable-next-line CompileStatic */
 pipeline {
-    agent { docker { image 'node:20.17.0-alpine3.20' } }
-
-    environment {
-        DISABLE_AUTH = 'true'
-        DB_ENGINE    = 'sqlite'
-    }
-
+    agent any
     stages {
-        stage('build') {
+        stage('No-op') {
             steps {
-                
-                echo "Database engine is ${DB_ENGINE}"
-                echo "DISABLE_AUTH is ${DISABLE_AUTH}"
-                
-                // sh 'docker -v'
-                sh 'node -v'
-                sh 'npm -v'
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'node --version'
+                sh 'ls'
             }
         }
     }
-
     post {
         always {
-            echo 'This will always run'
+            echo 'One way or another, I have finished'
+            deleteDir() /* clean up our workspace */
         }
         success {
-            echo 'This will run only if successful'
-        }
-        failure {
-            echo 'This will run only if failed'
+            echo 'I succeeded!'
         }
         unstable {
-            echo 'This will run only if the run was marked as unstable'
+            echo 'I am unstable :/'
+        }
+        failure {
+            echo 'I failed :('
         }
         changed {
-            echo 'This will run only if the state of the Pipeline has changed'
-            echo 'For example, if the Pipeline was previously failing but is now successful'
+            echo 'Things were different before...'
         }
     }
 }
