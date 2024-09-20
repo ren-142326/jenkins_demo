@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'docker -v'
+                // sh 'docker -v'
                 sh 'node -v'
                 sh 'npm -v'
                 sh 'echo "Hello World"'
